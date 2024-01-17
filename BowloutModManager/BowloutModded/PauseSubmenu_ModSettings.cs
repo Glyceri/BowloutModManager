@@ -1,8 +1,11 @@
 ﻿using BowloutModManager.BowloutMod;
 using BowloutModManager.BowloutMod.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -99,6 +102,25 @@ namespace BowloutModManager.BowloutModded
                             columns[i].AddToggle(fieldName, bValue, (newVal) => 
                             {
                                 field.SetValue(config, newVal);
+                                mod.SaveConfiguration(config);
+                            });
+                        }else if (obj is int iValue)
+                        {
+                            RangeAttribute range = field.GetAttribute<RangeAttribute>(true);
+                            if (range == null) continue;
+                            columns[i].AddSlider(fieldName, iValue, (int)range.min, (int)range.max, (iVal) =>
+                            {
+                                field.SetValue(config, iVal);
+                                mod.SaveConfiguration(config);
+                            });
+                        }
+                        else if (obj is float fValue)
+                        {
+                            RangeAttribute range = field.GetAttribute<RangeAttribute>(true);
+                            if (range == null) continue;
+                            columns[i].AddSlider(fieldName, fValue, range.min, range.max, (iVal) =>
+                            {
+                                field.SetValue(config, iVal);
                                 mod.SaveConfiguration(config);
                             });
                         }

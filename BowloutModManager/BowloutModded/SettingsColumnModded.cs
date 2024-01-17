@@ -34,12 +34,12 @@ namespace BowloutModManager.BowloutModded
             Resize();
         }
 
-        public void AddSlider(string name, int min, int max, Action<int> callback) => AddSlider(name, min, max, (fValue) => callback?.Invoke((int)fValue), SliderType.INT);
-        public void AddSlider(string name, float min, float max, Action<float> callback, SliderType sliderType = SliderType.FLOAT)
+        public void AddSlider(string name, int startValue, int min, int max, Action<int> callback) => AddSlider(name, startValue, min, max, (fValue) => callback?.Invoke((int)fValue), SliderType.INT);
+        public void AddSlider(string name, float startValue, float min, float max, Action<float> callback, SliderType sliderType = SliderType.FLOAT)
         {
             BLogger.WriteLineToLog("add SLIDER!");
             ModdedSliderSetting slider = Clone(SettingsColumnModdedHelper.SliderElement);
-            slider.Cleanup(min, max, callback, sliderType);
+            slider.Cleanup(startValue, min, max, callback, sliderType);
             if (slider == null)
             {
                 BLogger.WriteLineToLog("Slider NULL!");
@@ -131,7 +131,7 @@ namespace BowloutModManager.BowloutModded
                     return;
                 }
                 ModdedSliderSetting sliderSetting = slider.gameObject.AddComponent<ModdedSliderSetting>();
-                sliderSetting.Cleanup(0, 0, (nothing) => { });
+                sliderSetting.Cleanup(0, 0, 0, (nothing) => { });
                 SettingsColumnModdedHelper.SliderElement = sliderSetting;
             }
             catch(Exception e) { BLogger.WriteLineToLog(e.ToString()); }
@@ -284,7 +284,7 @@ namespace BowloutModManager.BowloutModded
             catch (Exception e) { BLogger.WriteLineToLog($"Error: {e.Message}"); }
         }
 
-        public void Cleanup(float min, float max, Action<float> callback, SliderType sliderType = SliderType.FLOAT)
+        public void Cleanup(float startVal, float min, float max, Action<float> callback, SliderType sliderType = SliderType.FLOAT)
         {
             if (slider == null) return;
             slider.onValueChanged.RemoveAllListeners();
@@ -296,12 +296,13 @@ namespace BowloutModManager.BowloutModded
 
             slider.onValueChanged.AddListener((fValue) =>
             {
-                callback?.Invoke(fValue);
                 valueText?.SetText(fValue.ToString());
+                callback?.Invoke(fValue);
             });
-        
+
+            slider.value = startVal;
             slider.wholeNumbers = sliderType == SliderType.INT;
-            slider.onValueChanged?.Invoke(min);
+            slider.onValueChanged?.Invoke(startVal);
         }
     }
 
