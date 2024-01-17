@@ -1,7 +1,6 @@
 ﻿using BowloutModManager.BowloutMod.Interfaces;
 using Newtonsoft.Json;
 using System;
-using UnityEngine;
 
 namespace BowloutModManager.BowloutMod
 {

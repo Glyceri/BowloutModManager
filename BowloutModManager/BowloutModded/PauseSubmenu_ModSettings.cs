@@ -1,5 +1,6 @@
 ﻿using BowloutModManager.BowloutMod;
 using BowloutModManager.BowloutMod.Interfaces;
+using BowloutModManager.BowloutModded.CustomTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace BowloutModManager.BowloutModded
 
                     IBowloutConfiguration config = mod.Configuration;
 
-                    FieldInfo[] fields = config.GetType().GetFields();
+                    FieldInfo[] fields = config.GetType().GetFields(); 
 
                     foreach(FieldInfo field in fields)
                     {
@@ -123,6 +124,18 @@ namespace BowloutModManager.BowloutModded
                                 field.SetValue(config, iVal);
                                 mod.SaveConfiguration(config);
                             });
+                        }else if (obj is BowloutBoolList boolList)
+                        {
+                            int length = boolList.Length;
+                            for(int f = 0; f < length; f++)
+                            {
+                                BowloutBoolValue boolValue = boolList[f];
+                                columns[i].AddToggle(boolValue.name, boolValue.value, (boolean) =>
+                                {
+                                    boolList.Set(boolValue.name, boolean);
+                                    mod.SaveConfiguration(config);
+                                });
+                            }
                         }
                     }
 

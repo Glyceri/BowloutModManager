@@ -290,7 +290,9 @@ namespace BowloutModManager.BowloutModded
             slider.onValueChanged.RemoveAllListeners();
             int persistentCount = slider.onValueChanged.GetPersistentEventCount();
             for (int i = 0; i < persistentCount; i++)
+            {
                 slider.onValueChanged.SetPersistentListenerState(i, UnityEngine.Events.UnityEventCallState.Off);
+            }
             slider.minValue = min;
             slider.maxValue = max;
 

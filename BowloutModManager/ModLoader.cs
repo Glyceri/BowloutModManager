@@ -1,4 +1,5 @@
 ﻿using BowloutModManager.BowloutMod;
+using BowloutModManager.BowloutModded.ModlistMod;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +44,8 @@ namespace BowloutModManager
 
             installedMods = allBowloutMods;
 
+            InstallBowloutModlist();
+
             BLogger.WriteLineToLog("Loaded the following mods: ");
             foreach (IBowloutMod mod in installedMods)
             {
@@ -50,6 +53,13 @@ namespace BowloutModManager
             }
 
             SafeInvokeSetup();
+        }
+
+        public void InstallBowloutModlist()
+        {
+            List<IBowloutMod> bowloutMods = BowloutMods.ToList();
+            bowloutMods.Insert(0, new BowloutModlistMod());
+            installedMods = bowloutMods.ToArray();
         }
 
         void SafeInvokeSetup()

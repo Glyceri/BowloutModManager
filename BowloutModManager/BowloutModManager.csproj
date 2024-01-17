@@ -50,11 +50,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BLogger.cs" />
+    <Compile Include="BowloutModded\CustomTypes\BowloutBoolList.cs" />
     <Compile Include="BowloutModded\Exceptions\BowloutException.cs" />
     <Compile Include="BowloutModded\Exceptions\NoModsFoundException.cs" />
     <Compile Include="BowloutModded\Exceptions\NoModsLoadedException.cs" />
     <Compile Include="BowloutModded\Interfaces\SingletonBase.cs" />
-    <Compile Include="BowloutModded\ModlistMod\BowloutModlist.cs" />
+    <Compile Include="BowloutModded\ModlistMod\BowloutModlistMod.cs" />
+    <Compile Include="BowloutModded\ModlistMod\ModlistConfiguration.cs" />
     <Compile Include="BowloutModded\PauseSubmenu_ModSettings.cs" />
     <Compile Include="BowloutModded\SettingsColumnModded.cs" />
     <Compile Include="BowloutModded\SetupMainMenu.cs" />
