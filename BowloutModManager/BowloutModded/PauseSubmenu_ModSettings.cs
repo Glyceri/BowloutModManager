@@ -130,6 +130,7 @@ namespace BowloutModManager.BowloutModded
                             for(int f = 0; f < length; f++)
                             {
                                 BowloutBoolValue boolValue = boolList[f];
+                                if (boolValue.name == "Bowlout Mod List") continue;
                                 columns[i].AddToggle(boolValue.name, boolValue.value, (boolean) =>
                                 {
                                     boolList.Set(boolValue.name, boolean);
@@ -138,7 +139,6 @@ namespace BowloutModManager.BowloutModded
                             }
                         }
                     }
-
                 }
                 blackenedInts.Add(counter);
                 counter++;

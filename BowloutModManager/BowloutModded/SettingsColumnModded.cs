@@ -277,6 +277,9 @@ namespace BowloutModManager.BowloutModded
 
                 SettingSliderLockable settingSliderLockable = transform.GetChild(1).GetComponent<SettingSliderLockable>();
                 if (settingSliderLockable != null) Destroy(settingSliderLockable);
+                
+                Settings_Slider_ValueText ssvalueText = GetComponent<Settings_Slider_ValueText>();
+                if (valueText != null) Destroy(ssvalueText);
 
                 Settings_Slider settingsSlider = GetComponent<Settings_Slider>();
                 if (settingsSlider != null) Destroy(settingsSlider);

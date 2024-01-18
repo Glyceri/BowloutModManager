@@ -8,6 +8,11 @@ namespace BowloutModManager.BowloutModded.ModlistMod
     {
         public int Version { get; set; } = 1;
 
-        public BowloutBoolList ModList { get; set; }
+        public BowloutBoolList ModList;
+
+        public ModlistConfiguration() 
+        {
+            if (ModList == null) ModList = new BowloutBoolList();
+        }
     }
 }

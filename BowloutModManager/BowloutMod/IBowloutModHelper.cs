@@ -17,6 +17,7 @@ namespace BowloutModManager.BowloutMod
             try
             {
                 T jsonObject = JsonConvert.DeserializeObject<T>(ModDirectoryHandler.Instance.ReadFile(ModPath));
+                if (jsonObject == null) throw new BowloutException();
                 SaveConfiguration(bowloutMod, jsonObject);
                 return jsonObject;
             }catch(Exception e)

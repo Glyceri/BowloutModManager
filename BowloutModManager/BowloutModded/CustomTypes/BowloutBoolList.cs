@@ -6,13 +6,15 @@ using System.Linq;
 namespace BowloutModManager.BowloutModded.CustomTypes
 {
     [Serializable]
-    public struct BowloutBoolList
+    public class BowloutBoolList
     {
-        bool[] values;
-        string[] names;
+        public bool[] values { get; private set; } = new bool[0];
+        public string[] names { get; private set; } = new string[0];
 
         [JsonIgnore]
         public int Length => values.Length;
+
+        public BowloutBoolList() { }
 
         [JsonConstructor]
         public BowloutBoolList(bool[] values, string[] names)
@@ -102,7 +104,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
 
         public bool Contains(string name)
         {
-            for(int i = 0; i < Length; i++)
+            for(int i = 0; i < names.Length; i++)
             {
                 if (names[i] == name) return true;
             }
@@ -111,7 +113,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
 
         public bool Get(string name)
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < names.Length; i++)
             {
                 if (names[i] == name) 
                     return values[i];

@@ -14,25 +14,27 @@ namespace BowloutModManager.BowloutModded.ModlistMod
 
         public string Description => "Literally a modlist.";
 
-        public IBowloutConfiguration Configuration => this.GetConfiguration<ModlistConfiguration>() ?? new ModlistConfiguration();
+        public IBowloutConfiguration Configuration { get; set; } = null;
         ModlistConfiguration Settings => (ModlistConfiguration)Configuration;
 
         public void OnSetup()
         {
-            IBowloutMod[] activeMods = Main.Instance.BowloutMods;
+            Configuration = this.GetConfiguration<ModlistConfiguration>() ?? new ModlistConfiguration();
 
             List<BowloutBoolValue> bowloutValues = new List<BowloutBoolValue>();
           
-            foreach(IBowloutMod mod in activeMods)
+            foreach(IBowloutMod mod in Main.Instance.BowloutMods)
             {
+                if (mod == null) continue;
                 bool value = true;
                 if (Settings.ModList.Contains(mod.Name)) value = Settings.ModList.Get(mod.Name);
                 bowloutValues.Add(new BowloutBoolValue(value, mod.Name));
+                BLogger.WriteLineToLog("Add for: " + mod.Name);
             }
 
             Settings.ModList.Clear();
             Settings.ModList.Set(bowloutValues);
-            this.SaveConfiguration(Settings);
+            this.SaveConfiguration(Configuration);
         }
 
         public void Dispose()
