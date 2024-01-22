@@ -5,6 +5,7 @@ namespace BowloutModManager.BowloutMod
 {
     public interface IBowloutMod : IDisposable
     {
+        bool Enabled { get; set; }
         /// <summary>
         /// The name of your plugin.
         /// </summary>
@@ -46,5 +47,9 @@ namespace BowloutModManager.BowloutMod
         /// Gets called every Fixed Update
         /// </summary>
         void OnFixedUpdate();
+        /// <summary>
+        /// Gets called OnGUI;
+        /// </summary>
+        void OnGUI();
     }
 }

@@ -44,7 +44,10 @@ namespace BowloutModManager.BowloutModded
 
         void OnClose()
         {
-            //columns[0].Cleanup();
+            for(int i = 0; i < columns.Count; i++)
+            {
+                columns[i].Cleanup();
+            }
         }
 
         IBowloutMod[] currentMods;

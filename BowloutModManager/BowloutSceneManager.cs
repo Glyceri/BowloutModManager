@@ -25,6 +25,9 @@ namespace BowloutModManager
         void OnMainMenuLoaded(Scene rootScene)
         {
             SetupMainMenu setupMainMenu = new GameObject("[Bowlout Mod] Setup Main Menu").AddComponent<SetupMainMenu>();
+
+            if (GameObject.FindObjectOfType<BowloutTicker>() != null) return;
+            GameObject.DontDestroyOnLoad(new GameObject("[Bowlout Ticker]").AddComponent<BowloutTicker>()); 
         }
     }
 }

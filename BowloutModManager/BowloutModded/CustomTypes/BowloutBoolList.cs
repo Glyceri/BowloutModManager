@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Cci;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace BowloutModManager.BowloutModded.CustomTypes
 {
@@ -13,6 +16,9 @@ namespace BowloutModManager.BowloutModded.CustomTypes
 
         [JsonIgnore]
         public int Length => values.Length;
+
+        public delegate void OnChangeMod(string name, bool value);
+        public event OnChangeMod onChangeMod;
 
         public BowloutBoolList() { }
 
@@ -35,6 +41,11 @@ namespace BowloutModManager.BowloutModded.CustomTypes
 
             this.values = values;
             this.names = names;
+
+            for(int i = 0; i < this.values.Length; i++)
+            {
+                onChangeMod?.Invoke(this.names[i], this.values[i]);
+            }
         }
 
         [JsonIgnore]
@@ -45,6 +56,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
             {
                 values[i] = value.value;
                 names[i] = value.name;
+                onChangeMod?.Invoke(names[i], values[i]);
             }
         }
 
@@ -69,6 +81,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
             List<string> names = this.names.ToList();
             values.Add(defaultValue);
             names.Add(name);
+            onChangeMod?.Invoke(name, defaultValue);
             this.values = values.ToArray();
             this.names = names.ToArray();
         }
@@ -79,6 +92,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
             {
                 if (names[i] != name) continue;
                 values[i] = value;
+                onChangeMod?.Invoke(name, value);
                 break;
             }
         }
@@ -91,6 +105,7 @@ namespace BowloutModManager.BowloutModded.CustomTypes
             {
                 namesList.Add(value.name);
                 valuesList.Add(value.value);
+                onChangeMod?.Invoke(value.name, value.value);
             }
             this.names = namesList.ToArray();
             this.values = valuesList.ToArray();

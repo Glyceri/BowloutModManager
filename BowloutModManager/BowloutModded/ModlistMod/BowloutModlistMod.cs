@@ -17,6 +17,8 @@ namespace BowloutModManager.BowloutModded.ModlistMod
         public IBowloutConfiguration Configuration { get; set; } = null;
         ModlistConfiguration Settings => (ModlistConfiguration)Configuration;
 
+        public bool Enabled { get; set; }
+
         public void OnSetup()
         {
             Configuration = this.GetConfiguration<ModlistConfiguration>() ?? new ModlistConfiguration();
@@ -29,13 +31,39 @@ namespace BowloutModManager.BowloutModded.ModlistMod
                 bool value = true;
                 if (Settings.ModList.Contains(mod.Name)) value = Settings.ModList.Get(mod.Name);
                 bowloutValues.Add(new BowloutBoolValue(value, mod.Name));
-                BLogger.WriteLineToLog("Add for: " + mod.Name);
             }
 
             Settings.ModList.Clear();
             Settings.ModList.Set(bowloutValues);
+            Settings.ModList.onChangeMod += (string mod, bool value) =>
+            {
+                foreach (IBowloutMod imod in Main.Instance.BowloutMods)
+                {
+                    if (imod.Name == mod) onModToggle?.Invoke(imod, value);
+                }
+            };
+
+            for(int i = 0; i < Settings.ModList.Length; i++)
+            {
+                BowloutBoolValue value = Settings.ModList[i];
+                onModToggle?.Invoke(GetMod(value.name), value.value);
+            }
+
             this.SaveConfiguration(Configuration);
         }
+
+        IBowloutMod GetMod(string name)
+        {
+            foreach(IBowloutMod mod in Main.Instance.BowloutMods)
+            {
+                if (mod.Name == name) return mod;
+            }
+            return null;
+        }
+
+        public delegate void OnModToggle(IBowloutMod mod, bool value);
+
+        public event OnModToggle onModToggle;
 
         public void Dispose()
         {
@@ -63,6 +91,11 @@ namespace BowloutModManager.BowloutModded.ModlistMod
         }
 
         public void OnUpdate()
+        {
+            
+        }
+
+        public void OnGUI()
         {
             
         }

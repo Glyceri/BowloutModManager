@@ -64,6 +64,7 @@
     <Compile Include="BowloutMod\IBowloutModHelper.cs" />
     <Compile Include="BowloutMod\Interfaces\IBowloutConfiguration.cs" />
     <Compile Include="BowloutSceneManager.cs" />
+    <Compile Include="BowloutTicker.cs" />
     <Compile Include="Doorstop.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ModDirectoryHandler.cs" />

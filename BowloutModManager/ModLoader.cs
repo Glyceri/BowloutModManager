@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace BowloutModManager
 {
@@ -58,7 +59,14 @@ namespace BowloutModManager
         public void InstallBowloutModlist()
         {
             List<IBowloutMod> bowloutMods = BowloutMods.ToList();
-            bowloutMods.Insert(0, new BowloutModlistMod());
+            BowloutModlistMod bowloutModlistMod = new BowloutModlistMod();
+            bowloutModlistMod.onModToggle += (IBowloutMod mod, bool value) => 
+            {
+                if (mod == null) return;
+                if (value) { mod.OnEnable(); mod.Enabled = true; }
+                else { mod.OnDisable(); mod.Enabled = false; }
+            };
+            bowloutMods.Insert(0, bowloutModlistMod);
             installedMods = bowloutMods.ToArray();
         }
 
