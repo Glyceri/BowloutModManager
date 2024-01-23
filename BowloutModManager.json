@@ -1,0 +1,9 @@
+{
+  "latest_version": "1.0.0.0",
+  "latest_url": "https://github.com/Glyceri/BowloutModManager/releases/download/1.0.0.0/BowloutModManager.dll",
+  "recommended_mods": [
+    "https://raw.githubusercontent.com/Glyceri/BowloutFreecam/main/BowloutFreecam.json",
+    "https://raw.githubusercontent.com/Glyceri/BowloutConsoleMod/main/BowloutConsoleMod.json",
+    "https://raw.githubusercontent.com/Glyceri/BowloutHierarchyMod/main/BowloutHierarchyMod.json"
+  ]
+}
