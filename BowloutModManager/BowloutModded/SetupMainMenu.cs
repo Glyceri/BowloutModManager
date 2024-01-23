@@ -11,7 +11,6 @@ namespace BowloutModManager.BowloutModded
     {
         void Start()
         {
-            BLogger.WriteLineToLog("START!");
             try
             {
                 GameObject quitGameButton = GameObject.Find("B_Settings_Cogwheel");
@@ -77,7 +76,6 @@ namespace BowloutModManager.BowloutModded
                 Transform allSettingsObject = pauseClone.transform.GetChild(0);
                 if (allSettingsObject == null)
                 {
-                    BLogger.WriteLineToLog("allSettingsObject NULL!");
                     return;
                 }
 
@@ -87,7 +85,6 @@ namespace BowloutModManager.BowloutModded
 
                 for (int i = childCount - 1; i >= 0; i--)
                 {
-                    BLogger.WriteLineToLog("CHILD!");
                     Transform column = allSettingsObject.GetChild(i);
                     settings.Add(column.gameObject.AddComponent<SettingsColumnModded>());
 

@@ -13,7 +13,6 @@ namespace BowloutModManager.BowloutModded
 
         protected override void OnStart()
         {
-            BLogger.WriteLineToLog("START! COLUMN");
             base.OnStart();
             FindScrollrect();
             HelpFind();
@@ -37,12 +36,10 @@ namespace BowloutModManager.BowloutModded
         public void AddSlider(string name, int startValue, int min, int max, Action<int> callback) => AddSlider(name, startValue, min, max, (fValue) => callback?.Invoke((int)fValue), SliderType.INT);
         public void AddSlider(string name, float startValue, float min, float max, Action<float> callback, SliderType sliderType = SliderType.FLOAT)
         {
-            BLogger.WriteLineToLog("add SLIDER!");
             ModdedSliderSetting slider = Clone(SettingsColumnModdedHelper.SliderElement);
             slider.Cleanup(startValue, min, max, callback, sliderType);
             if (slider == null)
             {
-                BLogger.WriteLineToLog("Slider NULL!");
                 return;
             }
             try
@@ -57,7 +54,6 @@ namespace BowloutModManager.BowloutModded
             ModdedToggleSetting toggle = Clone(SettingsColumnModdedHelper.ToggleElement);
             if (toggle == null)
             {
-                BLogger.WriteLineToLog("Toggle NULL!");
                 return;
             }
             toggle.SetName(name);
@@ -70,7 +66,6 @@ namespace BowloutModManager.BowloutModded
         {
             if (fromObject == null)
             {
-                BLogger.WriteLineToLog("From Object is NULL: " + typeof(T).Name);
                 return null;
             }
             try
@@ -123,7 +118,7 @@ namespace BowloutModManager.BowloutModded
                 {
                     return;
                 }
-                BLogger.WriteLineToLog("FOUND SLIDER!");
+
                 // Is Slider Setting!
                 Transform slider = GameObject.Instantiate(baseChild);
                 if (slider == null)
@@ -153,7 +148,7 @@ namespace BowloutModManager.BowloutModded
                 {
                     return;
                 }
-                BLogger.WriteLineToLog("FOUND TOGGLE!");
+
                 // Is Toggle Setting!
                 Transform toggle = GameObject.Instantiate(baseChild);
                 if (toggle == null)
@@ -229,8 +224,7 @@ namespace BowloutModManager.BowloutModded
         public void SetName(string name)
         {
             if (nameText == null) FindNametext();
-            BLogger.WriteLineToLog(name);
-            BLogger.WriteLineToLog(nameText == null ? "NAMETEXT NULL!" : "NAMETEXT NOTNULL!");
+
             try
             {
                 gameObject.name = name;

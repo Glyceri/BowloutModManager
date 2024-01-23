@@ -5,6 +5,8 @@ namespace BowloutModManager
 {
     public static class BLogger
     {
+        public const string ModlogPath = "ModLog/log.txt";
+
         static BLogger()
         {
 #if DEBUG
@@ -29,7 +31,7 @@ namespace BowloutModManager
         {
             try
             {
-                File.Copy("ModLog/log.txt", "ModLog/log_old.txt", true);
+                File.Copy(ModlogPath, "ModLog/log_old.txt", true);
             }
             catch(Exception e) 
             {
@@ -38,7 +40,7 @@ namespace BowloutModManager
 
             try
             {
-                File.Delete("ModLog/log.txt");
+                File.Delete(ModlogPath);
             }
             catch (Exception e)
             {
@@ -47,7 +49,7 @@ namespace BowloutModManager
 
             try
             {
-                File.CreateText("ModLog/log.txt").Close();
+                File.CreateText(ModlogPath).Close();
             }
             catch (Exception e) 
             {
@@ -60,7 +62,7 @@ namespace BowloutModManager
         {
             try
             {
-                File.AppendAllText("ModLog/log.txt", logText);
+                File.AppendAllText(ModlogPath, logText);
             }
             catch { }
         }
